@@ -11,7 +11,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">CyberSec Platform</h1>
+      <h1 className="navbar-title">CyberSec </h1>
       <div className={`links ${isMobile ? 'mobile' : ''}`}>
         <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
         <Link to="/courses" className="nav-link" onClick={toggleMenu}>Courses</Link>

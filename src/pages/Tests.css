@@ -10,6 +10,7 @@
     font-size: 2rem;
     margin-bottom: 10px;
     text-align: center;
+    color: #04d449;
   }
   
   .tests-description {
@@ -36,7 +37,7 @@
   }
   
   .start-button {
-    background-color: #0374ff;
+    background-color: #016824;
     color: white;
     border: none;
     border-radius: 5px;

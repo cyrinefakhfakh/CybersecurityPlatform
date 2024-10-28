@@ -1,39 +1,57 @@
 import { Link } from 'react-router-dom';
-import './Home.css'; // Fichier CSS dédié pour cette page
-import heroImage from '../assets/hero.jpg'; // Ajoute une image illustrative
+import './Home.css'; // Dedicated CSS for styling
+import heroImage from '../assets/hero.png'; // Replace with your preferred image
 
 function Home() {
   return (
     <div className="home-container">
-      <div className="home-content">
-        <h1>Master the Art of Cybersecurity</h1>
-        <p>
-          Join our platform to access engaging courses, practical tests, and certifications.
-          Improve your skills, earn points, and track your progress!
-        </p>
-        <Link to="/courses">
-          <button className="cta-button">Explore Courses</button>
-        </Link>
-      </div>
 
-      <div className="home-image">
-        <img src={heroImage} alt="Cybersecurity Illustration" />
-      </div>
+      <section className="hero-section">
+        <div className="hero-content">
+          <h1>Elevate Your Cybersecurity Skills</h1>
+          <p>
+            Gain in-depth knowledge and hands-on experience with our expert-led courses. 
+            Prepare for the future with certifications and real-world challenges.
+          </p>
+          <Link to="/courses">
+            <button className="cta-button">Get Started</button>
+          </Link>
+        </div>
+        <div className="hero-image">
+          <img src={heroImage} alt="Cybersecurity in Action" />
+        </div>
+      </section>
 
-      <div className="features">
+      <section className="stats-section">
+        <div className="stat">
+          <h3>20</h3>
+          <p>Courses Available</p>
+        </div>
+        <div className="stat">
+          <h3>10</h3>
+          <p>Students Enrolled</p>
+        </div>
+        <div className="stat">
+          <h3>10</h3>
+          <p>Certificates Issued</p>
+        </div>
+      </section>
+
+      <section className="features">
         <div className="feature-card">
-          <h3>Interactive Learning</h3>
-          <p>Access hands-on labs and real-world scenarios to strengthen your knowledge.</p>
+          <h3>Comprehensive Courses</h3>
+          <p>Stay ahead with updated courses tailored for every skill level.</p>
         </div>
         <div className="feature-card">
-          <h3>Earn Certifications</h3>
-          <p>Complete courses and earn certificates to showcase your expertise.</p>
+          <h3>Real-World Labs</h3>
+          <p>Get hands-on experience with practical challenges.</p>
         </div>
         <div className="feature-card">
-          <h3>Track Progress</h3>
-          <p>Monitor your growth and stay motivated with our gamified dashboard.</p>
+          <h3>Certified Instructors</h3>
+          <p>Learn from industry experts with proven experience.</p>
         </div>
-      </div>
+      </section>
+
     </div>
   );
 }

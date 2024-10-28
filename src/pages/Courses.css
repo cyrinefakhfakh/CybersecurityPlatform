@@ -1,95 +1,113 @@
-/* Style global pour la page Courses */
+/* Global Styles for Courses Page */
 .courses-container {
     text-align: center;
-    padding: 50px;
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Matching gradient theme */
+    padding: 80px 50px; /* Balanced padding */
+    background: linear-gradient(135deg, rgba(15, 32, 39, 0.85), rgba(48, 124, 103, 0.85));
     min-height: 100vh;
     color: #cfd8dc; /* Light text color for contrast */
+    animation: fadeIn 1s ease-in-out; /* Page-level fade-in animation */
 }
 
 .courses-container h1 {
-    font-size: 3rem; /* Larger font size for consistency */
-    margin-bottom: 10px;
-    animation: fadeIn 1s ease-in-out; /* Add fade-in animation */
+    font-size: 3rem; /* Consistent font size with home page */
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #03a20b; /* Accent color matching the home page */
+    text-transform: uppercase;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .courses-container p {
-    font-size: 1.3rem; /* Increased font size for better readability */
+    font-size: 1.2rem;
     margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
 }
 
-/* Grille pour les cartes de cours */
+/* Grid for Course Cards */
 .courses-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* More responsive layout */
+    gap: 30px;
     padding: 0 20px;
 }
 
-/* Style des cartes de cours */
+/* Course Card Styles */
 .course-card {
-    background-color: #1e272e; /* Dark card background to match theme */
-    padding: 20px;
-    border-radius: 10px;
+    background-color: #1e272e;
+    padding: 25px;
+    border-radius: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* More prominent shadow */
 }
 
 .course-card h3 {
-    color: #03a3ff; /* Neon green for course titles */
-    margin-bottom: 10px;
+    color: #00c421;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
 .course-card p {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     line-height: 1.5;
+    font-size: 1rem;
 }
 
+/* Level Tag Styles */
 .course-card .level {
     position: absolute;
     top: 15px;
     right: 15px;
-    padding: 5px 10px;
+    padding: 7px 12px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: bold;
     text-transform: uppercase;
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+    color: white;
 }
 
 .level.beginner {
-    color: #4caf50; /* Green for beginner */
+    color: #4caf50;
 }
 
 .level.intermediate {
-    color: #ff9800; /* Orange for intermediate */
+    color: #ff9800;
 }
 
 .level.advanced {
-    color: #f44336; /* Red for advanced */
+    color: #f44336;
 }
 
+/* Course Card Hover Effect */
 .course-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
 }
 
+/* Enroll Button Styles */
 .enroll-button {
-    background-color: #0374ff; /* Blue button to match theme */
+    background: linear-gradient(to right, #019a5d, #04553a); /* Gradient button */
     border: none;
-    padding: 10px 20px;
-    color: #ffffff; /* White text */
-    border-radius: 20px;
+    padding: 12px 24px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s; /* Add transform on hover */
+    transition: background 0.3s, transform 0.3s;
 }
 
 .enroll-button:hover {
-    background-color: #455aa0; /* Darker blue on hover */
-    transform: translateY(-2px); /* Lift effect on hover */
+    background: linear-gradient(to right, #455aa0, #3c6db0); /* Darker gradient on hover */
+    transform: translateY(-3px); /* Lift effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow on hover */
 }
 
-/* Animation simple */
+/* Fade-in Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -98,5 +116,20 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .courses-container h1 {
+        font-size: 2.5rem;
+    }
+
+    .courses-container p {
+        font-size: 1.1rem;
+    }
+
+    .enroll-button {
+        font-size: 0.9rem;
     }
 }

@@ -3,9 +3,9 @@ import ProgressBar from '../components/ProgressBar';
 import './Profile.css'; // Importing a CSS file for styles
 
 function Profile() {
-  const userProgress = 75; // Example progress
-  const userName = "John Doe"; // Example user name
-  const userEmail = "john.doe@example.com"; // Example user email
+  const userProgress = 75; 
+  const userName = "Cyrine"; 
+  const userEmail = "cyrinefk@gmail.com.com"; 
   const certificates = [
     { id: 1, name: "Cybersecurity Fundamentals" },
     { id: 2, name: "Web Application Security" },

@@ -32,7 +32,6 @@ function Courses() {
 
   return (
     <div className="courses-container">
-      <h1>Our Courses</h1>
       <p>Explore our cybersecurity training modules and grow your skills!</p>
 
       <div className="courses-list">
