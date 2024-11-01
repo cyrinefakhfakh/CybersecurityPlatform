@@ -17,6 +17,7 @@ function Navbar() {
         <Link to="/courses" className="nav-link" onClick={toggleMenu}>Courses</Link>
         <Link to="/tests" className="nav-link" onClick={toggleMenu}>Tests</Link>
         <Link to="/profile" className="nav-link" onClick={toggleMenu}>Profile</Link>
+        <Link to="/signup" className="signup-button">Sign Up</Link>
       </div>
       <button className="menu-icon" onClick={toggleMenu}>
         {isMobile ? <FaTimes /> : <FaBars />}

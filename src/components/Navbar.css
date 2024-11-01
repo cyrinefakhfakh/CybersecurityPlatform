@@ -6,7 +6,22 @@ body {
     background-color: #181818; /* Fond sombre */
     color: #e0e0e0; /* Texte clair */
   }
-  
+  /* Navbar.css */
+.signup-button {
+  background-color: #02500f; /* Button color */
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #245726; 
+  color: #000;
+}
+
   /* Barre de navigation */
   .navbar {
     background-color: #1a1a1a;
