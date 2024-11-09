@@ -13,7 +13,7 @@
   .auth-container h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #20ff03;
+    color: #98ff98;
   }
   
   .auth-container label {
@@ -33,7 +33,7 @@
   }
   
   .auth-button {
-    background-color: #06951c;
+    background-color: #046b40;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -52,7 +52,7 @@
   }
   
   .auth-container a {
-    color: #20ff03;
+    color: #98ff98;
     text-decoration: none;
   }
   

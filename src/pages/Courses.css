@@ -12,7 +12,7 @@
     font-size: 3rem; /* Consistent font size with home page */
     margin-bottom: 20px;
     font-weight: bold;
-    color: #03a20b; /* Accent color matching the home page */
+    color: #98ff98; /* Accent color matching the home page */
     text-transform: uppercase;
     animation: fadeIn 1s ease-in-out;
 }
@@ -45,7 +45,7 @@
 }
 
 .course-card h3 {
-    color: #00c421;
+    color: #98ff98;
     font-size: 1.5rem;
     margin-bottom: 15px;
 }
@@ -102,7 +102,7 @@
 }
 
 .enroll-button:hover {
-    background: linear-gradient(to right, #455aa0, #3c6db0); /* Darker gradient on hover */
+    background: linear-gradient(to right, #45a06e, #3cb053); /* Darker gradient on hover */
     transform: translateY(-3px); /* Lift effect */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow on hover */
 }
