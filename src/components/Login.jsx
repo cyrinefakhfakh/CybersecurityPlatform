@@ -1,15 +1,17 @@
-// src/components/Login.jsx
+// src/components/Login.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Auth.css';
 
-function Login() {
+function Login({ onAuth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Ajouter la logique de connexion ici
+    onAuth();
+    navigate('/');
   };
 
   return (

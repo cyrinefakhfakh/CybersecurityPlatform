@@ -1,17 +1,17 @@
+// src/components/Navbar.js
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa'; // Icônes de menu
+import { FaBars, FaTimes } from 'react-icons/fa';
+import './Navbar.css';
 
-import './Navbar.css'; // Fichier CSS dédié
-
-function Navbar() {
-  const [isMobile, setIsMobile] = useState(false); // Gestion du menu mobile
+function Navbar({ isAuthenticated }) {
+  const [isMobile, setIsMobile] = useState(false);
 
   const toggleMenu = () => setIsMobile(!isMobile);
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">CyberSec </h1>
+      <h1 className="navbar-title">CyberSec</h1>
       <div className={`links ${isMobile ? 'mobile' : ''}`}>
         <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
         <Link to="/courses" className="nav-link" onClick={toggleMenu}>Courses</Link>
@@ -21,7 +21,7 @@ function Navbar() {
       <button className="menu-icon" onClick={toggleMenu}>
         {isMobile ? <FaTimes /> : <FaBars />}
       </button>
-      <Link to="/signup" className="signup-button">Sign Up</Link>
+      {!isAuthenticated && <Link to="/signup" className="signup-button">Sign Up</Link>}
     </nav>
   );
 }

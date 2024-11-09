@@ -2,16 +2,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Auth.css';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSignUp = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       // Ajouter la logique d'inscription ici
+
     } else {
       alert('Les mots de passe ne correspondent pas');
     }
