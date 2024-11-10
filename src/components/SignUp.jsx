@@ -1,23 +1,31 @@
 // src/components/SignUp.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Auth.css';
-import { useNavigate } from 'react-router-dom';
 
-function SignUp() {
+function SignUp({ onAuth }) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      // Ajouter la logique d'inscription ici
-
-    } else {
-      alert('Les mots de passe ne correspondent pas');
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
+      console.log('User signed up:', response.data);
+      alert('Sign up successful! Please log in.');
+      onAuth(); // Update authentication state
+      navigate('/login'); // Redirect to login page after signup
+    } catch (error) {
+      console.error('Signup error:', error.response?.data || error.message);
+      alert(error.response?.data?.message || 'Signup failed');
     }
   };
 
@@ -25,6 +33,14 @@ function SignUp() {
     <div className="auth-container">
       <h2>Create a New Account</h2>
       <form onSubmit={handleSignUp}>
+        <label>Name:</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
         <label>Email:</label>
         <input
           type="email"

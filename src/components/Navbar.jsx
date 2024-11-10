@@ -1,27 +1,34 @@
-// src/components/Navbar.js
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar({ isAuthenticated }) {
-  const [isMobile, setIsMobile] = useState(false);
+function Navbar({ isAuthenticated, onLogout }) {
+  const navigate = useNavigate();
 
-  const toggleMenu = () => setIsMobile(!isMobile);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    onLogout(); // Update authentication state
+    navigate('/login'); // Redirect to login page
+  };
 
   return (
     <nav className="navbar">
       <h1 className="navbar-title">CyberSec</h1>
-      <div className={`links ${isMobile ? 'mobile' : ''}`}>
-        <Link to="/" className="nav-link" onClick={toggleMenu}>Home</Link>
-        <Link to="/courses" className="nav-link" onClick={toggleMenu}>Courses</Link>
-        <Link to="/tests" className="nav-link" onClick={toggleMenu}>Tests</Link>
-        <Link to="/profile" className="nav-link" onClick={toggleMenu}>Profile</Link>
+      <div className="links">
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/courses" className="nav-link">Courses</Link>
+        <Link to="/tests" className="nav-link">Tests</Link>
+        <Link to="/profile" className="nav-link">Profile</Link>
+        
       </div>
-      <button className="menu-icon" onClick={toggleMenu}>
-        {isMobile ? <FaTimes /> : <FaBars />}
-      </button>
-      {!isAuthenticated && <Link to="/signup" className="signup-button">Sign Up</Link>}
+      {isAuthenticated ? (
+          <button onClick={handleLogout} className="nav-link logout-button">Logout</button>
+        ) : (
+          <>
+            <Link to="/signup" className="signup-button">Sign Up</Link>
+            <Link to="/login" className="signup-button">Login</Link>
+          </>
+        )}
     </nav>
   );
 }

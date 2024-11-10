@@ -82,6 +82,19 @@
     background-color: #72f078; 
     color: #02500f;
   }
+  .logout-button {
+    background: none;
+    border: none;
+    color: #0bbf74;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .logout-button:hover {
+    color: #4caf75;
+  }
+  
  
   @media (max-width: 768px) {
     .links {
@@ -110,4 +123,5 @@
       margin-bottom: 10px;
     }
   }
+
   

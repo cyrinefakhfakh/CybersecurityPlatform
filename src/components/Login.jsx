@@ -1,6 +1,7 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import './Auth.css';
 
 function Login({ onAuth }) {
@@ -8,10 +9,17 @@ function Login({ onAuth }) {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    onAuth();
-    navigate('/');
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', { email, password });
+      localStorage.setItem('token', response.data.token); // Store token
+      alert('Login successful!');
+      onAuth(); // Update authentication state
+      navigate('/'); // Redirect to homepage after login
+    } catch (error) {
+      console.error('Login error:', error.response?.data || error.message);
+    }
   };
 
   return (
