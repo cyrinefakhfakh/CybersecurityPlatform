@@ -33,10 +33,11 @@
   color: #0bbf74;
   margin: 0 10px;
   text-decoration: none;
+  transition: color 0.3s;
 }
 
 .navbar .links a:hover {
-  color: #4caf75;
+  color: #c7f4da;
 }
   
   .navbar {
@@ -74,7 +75,6 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
     transition: background-color 0.3s ease;
   }
   
@@ -83,17 +83,20 @@
     color: #02500f;
   }
   .logout-button {
-    background: none;
+    background-color: #046b40;
+    color: #fff;
     border: none;
-    color: #0bbf74;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: color 0.3s ease-in-out;
+    transition: background-color 0.3s ease;
   }
   
   .logout-button:hover {
-    color: #4caf75;
+    background-color: #72f078;
+    color: #02500f;
   }
+  
   
  
   @media (max-width: 768px) {

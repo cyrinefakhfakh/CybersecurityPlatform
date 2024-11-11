@@ -12,11 +12,11 @@ function Login({ onAuth }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email, password });
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token); // Store token
       alert('Login successful!');
       onAuth(); // Update authentication state
-      navigate('/'); // Redirect to homepage after login
+      navigate(); // Redirect to homepage after login
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);
     }
