@@ -7,6 +7,8 @@ import './Auth.css';
 function Login({ onAuth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -14,11 +16,16 @@ function Login({ onAuth }) {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token); // Store token
-      alert('Login successful!');
+      setMessage('Login successful! Redirecting to homepage...');
+      setMessageType('success');
       onAuth(); // Update authentication state
-      navigate(); // Redirect to homepage after login
+      setTimeout(() => {
+        navigate('/'); // Redirect to homepage after login
+      }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);
+      setMessage(error.response?.data?.message || 'Login failed');
+      setMessageType('error');
     }
   };
 
@@ -44,6 +51,11 @@ function Login({ onAuth }) {
 
         <button type="submit" className="auth-button">Login</button>
       </form>
+      {message && (
+        <div className={`message ${messageType}`}>
+          {message}
+        </div>
+      )}
       <p>
         Don’t have an account? <Link to="/signup">Sign Up</Link>
       </p>

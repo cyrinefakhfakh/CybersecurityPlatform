@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Button from './Button';
 import './Navbar.css';
 
 function Navbar({ isAuthenticated, onLogout }) {
@@ -26,7 +27,7 @@ function Navbar({ isAuthenticated, onLogout }) {
         ) : (
           <>
             <Link to="/signup" className="signup-button">Sign Up</Link>
-            <Link to="/login" className="signup-button">Login</Link>
+         
           </>
         )}
     </nav>

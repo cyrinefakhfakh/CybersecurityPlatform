@@ -23,7 +23,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Statistics Section */}
+    
       <section className="stats-section">
         <div className="stat">
           <h3>20+</h3>
@@ -43,7 +43,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="features">
         <div className="feature-card">
           <h3>Advanced Courses</h3>
@@ -63,7 +62,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+     
       <section className="testimonials">
         <h2>What Our Students Say</h2>
         <div className="testimonial-card">

@@ -13,7 +13,7 @@ router.post('/signup', async (req, res) => {
     // Check if the user already exists
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'A user with this email address already exists. Please try logging in instead.' });
     }
 
     // Create a new user
@@ -24,10 +24,10 @@ router.post('/signup', async (req, res) => {
     });
 
     await user.save();
-    res.status(201).json({ message: 'User signed up successfully' });
+    res.status(201).json({ message: 'Registration successful! Welcome to CyberSec. Please log in to continue.' });
   } catch (error) {
     console.error('Signup error:', error.message);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'We encountered an error while processing your registration. Please try again later.' });
   }
 });
 
@@ -38,21 +38,21 @@ router.post('/login', async (req, res) => {
     // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'The email address or password you entered is incorrect. Please try again.' });
     }
 
     // Check if the password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'The email address or password you entered is incorrect. Please try again.' });
     }
 
     // Generate a token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, message: 'Login successful! Welcome back to CyberSec.' });
   } catch (error) {
     console.error('Login error:', error.message);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'We encountered an error while processing your login. Please try again later.' });
   }
 });
 
@@ -63,7 +63,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error('Error fetching user details:', error.message);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'We encountered an error while fetching your details. Please try again later.' });
   }
 });
 

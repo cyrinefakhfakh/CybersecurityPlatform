@@ -1,4 +1,3 @@
-// src/components/SignUp.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -9,23 +8,34 @@ function SignUp({ onAuth }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [loading, setLoading] = useState(false); // Loading state for button
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setMessage('Passwords do not match');
+      setMessageType('error');
       return;
     }
+    setLoading(true); // Set loading to true during signup
     try {
       const response = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
       console.log('User signed up:', response.data);
-      alert('Sign up successful! Please log in.');
+      setMessage('Sign up successful! Please log in.');
+      setMessageType('success');
       onAuth(); // Update authentication state
-      navigate('/login'); // Redirect to login page after signup
+      setTimeout(() => {
+        setLoading(false); // Reset loading state
+        navigate('/login'); // Redirect to login page after signup
+      }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error('Signup error:', error.response?.data || error.message);
-      alert(error.response?.data?.message || 'Signup failed');
+      setMessage(error.response?.data?.message || 'Signup failed');
+      setMessageType('error');
+      setLoading(false); // Reset loading state on error
     }
   };
 
@@ -65,8 +75,26 @@ function SignUp({ onAuth }) {
           required
         />
 
-        <button type="submit" className="auth-button">Sign Up</button>
+        <button
+          type="submit"
+          className={`auth-button ${loading ? 'loading' : ''}`}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              Signing Up...
+              <span className="spinner"></span>
+            </>
+          ) : (
+            'Sign Up'
+          )}
+        </button>
       </form>
+      {message && (
+        <div className={`message ${messageType}`}>
+          {message}
+        </div>
+      )}
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
