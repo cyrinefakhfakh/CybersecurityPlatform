@@ -1,11 +1,11 @@
 .profile {
-    background-color: #282c34; /* Dark background */
-    color: #e0e0e0; /* Light text color */
+    background-color: #282c34; 
+    color: #e0e0e0;
     padding: 20px;
     border-radius: 8px;
     margin: 20px;
-    max-width: 600px; /* Max width for better layout */
-    margin: auto; /* Centering the profile component */
+    max-width: 600px; 
+    margin: auto; 
   }
   
   .profile-title {
@@ -17,7 +17,7 @@
   .user-info {
     margin: 20px 0;
     padding: 15px;
-    background-color: #1a1a1a; /* Slightly lighter background */
+    background-color: #1a1a1a; 
     border-radius: 5px;
   }
   
@@ -32,7 +32,7 @@
   }
   
   .certificate-item {
-    background-color: #1a1a1a; /* Background for certificate items */
+    background-color: #1a1a1a; 
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -40,6 +40,6 @@
   }
   
   .certificate-item:hover {
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.02);
   }
   

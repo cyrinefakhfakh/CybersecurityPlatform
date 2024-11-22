@@ -1,5 +1,5 @@
 import React from 'react';
-import './Tests.css'; // Importing a CSS file for styles
+import './Tests.css'; 
 
 function Tests() {
   const testList = [

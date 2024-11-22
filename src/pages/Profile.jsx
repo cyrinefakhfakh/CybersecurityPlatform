@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProgressBar from '../components/ProgressBar';
 import axios from 'axios';
 import './Profile.css'; 
@@ -6,6 +7,7 @@ import './Profile.css';
 function Profile() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const userProgress = 75; 
   const certificates = [
     { id: 1, name: "Cybersecurity Fundamentals" },
@@ -15,8 +17,13 @@ function Profile() {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/signup'); // Redirect to signup if no token is found
+        return;
+      }
+
       try {
-        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:5000/api/auth/me', {
           headers: {
             Authorization: `Bearer ${token}`
@@ -26,11 +33,12 @@ function Profile() {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user details:', error.message);
+        navigate('/signup'); // Redirect to signup on error
       }
     };
 
     fetchUserDetails();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -40,7 +48,7 @@ function Profile() {
     <div className="profile">
       <h2 className="profile-title">Your Profile</h2>
       <div className="user-info">
-        <p><strong>Name:</strong> {user.name}</p>
+        
         <p><strong>Email:</strong> {user.email}</p>
       </div>
       <p>Track your progress and earn certificates.</p>

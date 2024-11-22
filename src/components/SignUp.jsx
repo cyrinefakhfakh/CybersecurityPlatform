@@ -9,8 +9,8 @@ function SignUp({ onAuth }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
-  const [loading, setLoading] = useState(false); // Loading state for button
+  const [messageType, setMessageType] = useState(''); 
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -20,7 +20,7 @@ function SignUp({ onAuth }) {
       setMessageType('error');
       return;
     }
-    setLoading(true); // Set loading to true during signup
+    setLoading(true); 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
       console.log('User signed up:', response.data);

@@ -21,7 +21,19 @@
   transition: color 0.3s;
   padding-left: 50px;
 }
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
 
+.logo {
+  height: 2rem; /* Adjust the height as needed */
+  width: auto;
+  
+  
+
+}
 .navbar .links a:hover {
   color: #c7f4da;
 }
@@ -56,22 +68,20 @@
   }
   .signup-button {
     appearance: none;
-    background-color: #b4ffc2;
-    border: 1px solid rgba(27, 31, 35, 0.15);
+    background-color: #046b40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border-radius: 6px;
-    box-shadow:
-      rgba(27, 31, 35, 0.04) 0 1px 0,
-      rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
-    color: #24292e;
+    color: #e6ece7;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
-    padding: 3px 16px;
+    padding: 4px 17px;
     position: relative;
-    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition: background-color 0.3s ease, transform 0.1s ease;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
@@ -82,9 +92,9 @@
   }
   
   .signup-button:hover {
-    background-color: #f3f4f6;
-    text-decoration: none;
-    transition-duration: 0.1s;
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05);
+    transition-duration: 0.4s;
   }
   
   .signup-button:disabled {
@@ -106,14 +116,15 @@
   
   .logout-button {
     appearance: none;
-    background-color: #b4ffc2;
-    border: 1px solid rgba(27, 31, 35, 0.15);
+    background-color: #046b40;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border-radius: 6px;
     box-shadow:
       rgba(27, 31, 35, 0.04) 0 1px 0,
       rgba(255, 255, 255, 0.25) 0 1px 0 inset;
     box-sizing: border-box;
-    color: #24292e;
+    color: #e6ece7;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -132,10 +143,16 @@
   }
   
   .logout-button:hover {
-    background-color: #72f078;
-    color: #fdfdfd;
+    background-color: #00b53f;
+    color: #dddcdc;
+    text-decoration: none;
+    transition-duration: 0.4s;
+
   }
-  
+  .logout-button:focus {
+  outline: 2px solid #36f45c;
+  outline-offset: 2px;
+}
   
  
   @media (max-width: 768px) {

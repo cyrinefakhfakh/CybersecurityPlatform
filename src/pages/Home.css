@@ -29,6 +29,7 @@ body {
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .hero-content p {
@@ -38,10 +39,11 @@ body {
 
 .cta-button {
     background-color: #046b40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: none;
     padding: 15px 30px;
     font-size: 1.1rem;
-    color: #e6ece7;
+    color: #d5dad6;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;

@@ -1,0 +1,124 @@
+/* CourseDetail.css */
+.course-detail-container {
+  max-width: 700px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  
+  backdrop-filter: blur(10px); /* Blur effect for the background */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+}
+
+.course-detail-container h2 {
+  color: #046b40;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.course-detail-container h3 {
+  color: #105d27;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.course-description {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.course-meta span{
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.course-meta.level.beginner {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.level.intermediate {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.level.advanced {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.course-meta {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.course-meta p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.certificate {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.learning-outcomes, .modules-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.learning-outcomes li, .modules-list li {
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  color: #555;
+}
+
+.learning-outcomes li h3, .modules-list li h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #046b40;
+}
+
+.learning-outcomes li p, .modules-list li p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.enroll-button {
+  background-color: #046b40;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enroll-button:hover {
+  background-color: #72f078;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  color: #046b40;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}

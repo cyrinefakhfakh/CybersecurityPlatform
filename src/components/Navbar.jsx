@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from './Button';
 import './Navbar.css';
+import logo from '../assets/logo.png';
 
 function Navbar({ isAuthenticated, onLogout }) {
   const navigate = useNavigate();
@@ -14,7 +14,9 @@ function Navbar({ isAuthenticated, onLogout }) {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-title">CyberSec</h1>
+      <Link to="/" className="navbar-logo">
+        <img src={logo} alt="CyberSec Logo" className="logo" />
+      </Link>
       <div className="links">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/courses" className="nav-link">Courses</Link>
