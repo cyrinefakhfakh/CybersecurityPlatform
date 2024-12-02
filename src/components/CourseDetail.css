@@ -22,15 +22,7 @@
   font-size: 1.4rem;
   margin-bottom: 20px;
 }
-
-.course-description {
-  color: #555;
-  font-size: 1.1rem;
-  margin-bottom: 25px;
-  line-height: 1.6;
-}
-
-.course-meta span{
+.level {
   display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
@@ -38,7 +30,7 @@
   margin-bottom: 20px;
 }
 
-.course-meta.level.beginner {
+.level.beginner {
   background-color: #d4edda;
   color: #155724;
 }
@@ -52,11 +44,24 @@
   background-color: #f8d7da;
   color: #721c24;
 }
-
+.course-description {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
 .course-meta {
   margin-bottom: 20px;
   text-align: left;
 }
+.course-meta span{
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
 
 .course-meta p {
   font-size: 1.1rem;
@@ -121,4 +126,48 @@
 
 .back-button:hover {
   text-decoration: underline;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 500px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.payment-button {
+  background-color: #046b40;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.payment-button:hover {
+  background-color: #72f078;
 }

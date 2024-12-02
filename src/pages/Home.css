@@ -34,7 +34,7 @@ body {
 
 .hero-content p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .cta-button {
@@ -55,7 +55,9 @@ body {
 
 .hero-image img {
     max-width: 100%;
+    
 }
+
 
 /* Stats Section */
 .stats-section {
