@@ -15,7 +15,7 @@ import AdminCourseManagement from './components/AdminCourseManagement';
 import AdminUserManagement from './components/AdminUserManagement';
 import PrivateAdminRoute from './components/PrivateAdminRoute';
 import './index.css';
-
+ 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem('token')));
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');

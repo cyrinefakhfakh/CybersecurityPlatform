@@ -16,12 +16,15 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ message: 'A user with this email address already exists. Please try logging in instead.' });
     }
 
+    // Assign default role as 'user' if not provided
+    const userRole = role || 'user';
+
     // Create a new user
     user = new User({
       name,
       email,
       password: await bcrypt.hash(password, 10), // Hash the password
-      role: role || 'admin' // Default role is 'user'
+      role: userRole // Default role is 'user'
     });
 
     await user.save();
@@ -42,6 +45,9 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'The email address or password you entered is incorrect. Please try again.' });
     }
 
+    // Log the user object to check if the role is present
+    console.log('User found:', user);
+
     // Check if the password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -50,7 +56,7 @@ router.post('/login', async (req, res) => {
 
     // Generate a token
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, role: user.role });
+    res.json({ token, role: user.role }); // Include role in the response
   } catch (error) {
     console.error('Login error:', error.message);
     res.status(500).json({ message: 'We encountered an error while processing your login. Please try again later.' });
