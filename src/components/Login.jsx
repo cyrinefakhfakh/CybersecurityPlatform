@@ -1,4 +1,4 @@
-// src/components/Login.js
+// src/components/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -16,11 +16,14 @@ function Login({ onAuth }) {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token); // Store token
+      localStorage.setItem('role', response.data.role); // Store role
+      const isAdminUser = response.data.role === 'admin';
+      console.log('Role:', response.data.role);
       setMessage('Login successful! Redirecting to homepage...');
       setMessageType('success');
-      onAuth(); // Update authentication state
+      onAuth(isAdminUser); // Update authentication state
       setTimeout(() => {
-        navigate('/'); // Redirect to homepage after login
+        navigate(isAdminUser ? '/admin' : '/'); // Redirect to admin dashboard or homepage
       }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);

@@ -1,0 +1,77 @@
+/* src/components/AdminCourseManagement.css */
+.admin-course-management {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-course-management h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-course-management form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .admin-course-management input,
+  .admin-course-management textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .admin-course-management button {
+    padding: 10px;
+    background-color: #046b40;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-course-management button:hover {
+    background-color: #72f078;
+  }
+  
+  .admin-course-management ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin-course-management li {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .admin-course-management li h4 {
+    margin: 0 0 5px 0;
+  }
+  
+  .admin-course-management li p {
+    margin: 0 0 10px 0;
+  }
+  
+  .admin-course-management li button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-course-management li button:hover {
+    background-color: #ff1a1a;
+  }

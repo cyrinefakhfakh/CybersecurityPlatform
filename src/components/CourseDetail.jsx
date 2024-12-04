@@ -1,3 +1,4 @@
+// src/components/CourseDetail.jsx
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './CourseDetail.css';
@@ -56,11 +57,9 @@ const CourseDetail = ({ courses }) => {
         <div className="modal">
           <div className="modal-content">
             <span className="close-button" onClick={handleCloseModal}>&times;</span>
-            <h2>Payment Options</h2>
-            <p>Select a payment method to enroll in the course:</p>
-            <button className="payment-button">Credit Card</button>
-            <button className="payment-button">PayPal</button>
-            <button className="payment-button">Bank Transfer</button>
+            <h2>Enrollment Confirmation</h2>
+            <p>You have successfully enrolled in the course!</p>
+            <button className="confirm-button" onClick={handleCloseModal}>Close</button>
           </div>
         </div>
       )}

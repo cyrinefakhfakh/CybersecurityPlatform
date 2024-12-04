@@ -8,7 +8,7 @@ const authMiddleware = require('../middleware/auth'); // Middleware to verify to
 
 // Signup route
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
   try {
     // Check if the user already exists
     let user = await User.findOne({ email });
@@ -20,7 +20,8 @@ router.post('/signup', async (req, res) => {
     user = new User({
       name,
       email,
-      password: await bcrypt.hash(password, 10) // Hash the password
+      password: await bcrypt.hash(password, 10), // Hash the password
+      role: role || 'admin' // Default role is 'user'
     });
 
     await user.save();
@@ -48,8 +49,8 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate a token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, message: 'Login successful! Welcome back to CyberSec.' });
+    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.json({ token, role: user.role });
   } catch (error) {
     console.error('Login error:', error.message);
     res.status(500).json({ message: 'We encountered an error while processing your login. Please try again later.' });

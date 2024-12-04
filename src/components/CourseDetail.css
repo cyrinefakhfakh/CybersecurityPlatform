@@ -138,7 +138,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .modal-content {
   background-color: #fff;
   padding: 20px;
@@ -156,7 +155,7 @@
   cursor: pointer;
 }
 
-.payment-button {
+.confirm-button {
   background-color: #046b40;
   color: #fff;
   border: none;
@@ -168,6 +167,6 @@
   transition: background-color 0.3s ease;
 }
 
-.payment-button:hover {
+.confirm-button:hover {
   background-color: #72f078;
 }
