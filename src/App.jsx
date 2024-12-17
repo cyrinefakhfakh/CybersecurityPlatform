@@ -14,6 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminCourseManagement from './components/AdminCourseManagement';
 import AdminUserManagement from './components/AdminUserManagement';
 import PrivateAdminRoute from './components/PrivateAdminRoute';
+import AddCourse from './pages/admin/AddCourse'
 import './index.css';
  
 function App() {
@@ -68,6 +69,7 @@ function App() {
             </PrivateAdminRoute>
           } 
         />
+        <Route path="/admin/courses/add" element={<AddCourse />} />
       </Routes>
       <Footer />
     </Router>
