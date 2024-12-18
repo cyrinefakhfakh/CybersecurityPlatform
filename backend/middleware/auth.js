@@ -1,47 +1,49 @@
 const jwt = require('jsonwebtoken');
-
 const auth = (req, res, next) => {
-  // Log the full authorization header for debugging
-  console.log('Authorization Header:', req.headers.authorization);
+  const authHeader = req.header('Authorization');
+  const token = authHeader?.replace('Bearer ', '');
 
-  const token = req.headers.authorization?.split(' ')[1];
-  
+  console.log('===== AUTH MIDDLEWARE DEBUG =====');
+  console.log('Full Authorization Header:', authHeader);
+  console.log('Extracted Token:', token);
+
   if (!token) {
-    console.error('No token provided');
-    return res.status(401).send({ message: 'Access denied. No token provided.' });
+    console.error('NO TOKEN PROVIDED');
+    return res.status(401).json({ 
+      message: 'No authentication token',
+      debugInfo: { authHeader: req.headers.authorization }
+    });
   }
 
   try {
-    // Add more detailed logging
-    console.log('Attempting to verify token:', token);
-    console.log('JWT Secret:', process.env.JWT_SECRET ? 'Secret is set' : 'Secret is UNDEFINED');
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Log the decoded token
-    console.log('Decoded Token:', decoded);
+    console.log('Decoded Token:', {
+      userId: decoded.userId,
+      email: decoded.email,
+      role: decoded.role
+    });
 
-    // Ensure the user object is correctly attached
-    if (!decoded.user) {
-      console.error('No user object in decoded token');
-      return res.status(401).send({ message: 'Invalid token structure.' });
-    }
+    req.user = { 
+      id: decoded.userId,
+      email: decoded.email,
+      role: decoded.role 
+    };
 
-    req.user = decoded.user;
     next();
-  } catch (err) {
-    console.error('Token Verification Error:', err);
-    
-    // More specific error handling
-    if (err.name === 'JsonWebTokenError') {
-      return res.status(400).send({ message: 'Invalid token signature.' });
-    }
-    if (err.name === 'TokenExpiredError') {
-      return res.status(401).send({ message: 'Token has expired.' });
-    }
+  } catch (error) {
+    console.error('TOKEN VERIFICATION FAILED:', {
+      name: error.name,
+      message: error.message
+    });
 
-    res.status(400).send({ message: 'Invalid token.', error: err.message });
+    res.status(401).json({ 
+      message: 'Invalid or expired token',
+      errorDetails: {
+        name: error.name,
+        message: error.message
+      }
+    });
   }
 };
-
 module.exports = auth;

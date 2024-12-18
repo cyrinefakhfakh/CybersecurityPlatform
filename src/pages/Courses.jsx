@@ -40,62 +40,85 @@ const Courses = () => {
   const handleEnrollNowClick = async (course) => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('You must be logged in to enroll in a course.');
+      alert('Please log in to enroll in a course');
       return;
     }
   
     try {
-      console.log('Enrollment Token:', token);
-      console.log('Course ID:', course._id || course.id);
+      const response = await axios.post(
+        'http://localhost:5000/api/enroll', 
+        { 
+          courseId: course._id || course.id 
+        }, 
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          // Add timeout and error handling
+          timeout: 10000  // 10 seconds timeout
+        }
+      );
   
-      const { data } = await axios.post(
-        'http://localhost:5000/api/enroll',
-        { courseId: course._id || course.id },
+      if (response.data.success) {
+        // Update UI to show enrollment
+        setCourses(prevCourses => 
+          prevCourses.map(c => 
+            c.id === course.id 
+              ? { ...c, isEnrolled: true } 
+              : c
+          )
+        );
+        
+        alert('Successfully enrolled in the course!');
+        openEnrollmentSuccessModal(course);
+      }
+    } catch (error) {
+      console.error('ENROLLMENT AXIOS ERROR:', {
+        response: error.response?.data,
+        status: error.response?.status,
+        message: error.message
+      });
+  
+      const errorMessage = 
+        error.response?.data?.message || 
+        error.message || 
+        'Failed to enroll in the course';
+      
+      alert(errorMessage);
+    }
+  };
+  const openEnrollmentSuccessModal = (course) => {
+    alert(`Successfully enrolled in ${course.title}!`);
+    sendVerificationEmail(course);
+  };
+
+  const sendVerificationEmail = async (course) => {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+  
+    if (!token || !email) {
+      alert('Authentication expired. Please log in again.');
+      return;
+    }
+  
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/send-verification-email',
+        { email, courseTitle: course.title }, // Include course title in the request body
         { 
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
-          } 
+          }
         }
       );
+      alert('Verification email sent successfully.');
+    } catch (error) {
+      alert('Failed to send verification email.');
+    }
+  };
   
-      // Rest of the enrollment logic...
-    } catch (error) {
-      console.error('Detailed Enrollment Error:', {
-        response: error.response?.data,
-        message: error.message,
-        status: error.response?.status
-      });
-      
-      alert(error.response?.data?.message || 'Failed to enroll in course.');
-    }
-  };
-
-  const openEnrollmentSuccessModal = (course) => {
-    alert(`Successfully enrolled in ${course.title}!`);
-    sendVerificationEmail();
-  };
-
-  const sendVerificationEmail = async () => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-
-    if (!token || !email) {
-      alert('User authentication details are missing. Please log in again.');
-      return;
-    }
-
-    try {
-      await axios.post(
-        'http://localhost:5000/api/send-verification-email',
-        { email },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('A verification email has been sent to your email address.');
-    } catch (error) {
-      alert('Failed to send verification email. Please try again later.');
-    }
-  };
 
   const toggleMoreDetails = (courseId) => {
     setExpandedCourses((prev) => ({

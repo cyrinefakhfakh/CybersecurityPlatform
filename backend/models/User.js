@@ -19,8 +19,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: 'user', // Default role is 'user'
   },
+  enrolledCourses: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    }],
+    default: []  // Ensure default is an empty array
+  }
 });
-
-
 const User = mongoose.model('User', userSchema);
 module.exports = User;

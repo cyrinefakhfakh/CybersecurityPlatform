@@ -1,160 +1,148 @@
-/* Global Styling */
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #0e141b; /* Dark theme */
-    color: #e0e0e0;
-  }
-  
-  /* Courses Grid */
-  .courses {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    margin: 0 auto;
-    max-width: 1200px;
-  }
-  
-  /* Individual Course Card */
-  .course {
-    background: linear-gradient(135deg, rgba(48, 124, 103, 0.85), rgba(15, 32, 39, 0.85));
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #e0e0e0;
-    position: relative;
-  }
-  
-  .course:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  }
-  
-  .course h3 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    color: #98ff98;
-  }
-  
-  .course p {
-    margin: 0.5rem 0;
-  }
-  
-  /* Buttons */
-  .course button {
-    background-color: #046b40;
-    color: #d5dad6;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .course button:hover {
-    background-color: #00b53f;
-    transform: scale(1.05);
-  }
-  
-  .course button:first-child {
-    margin-right: 0.5rem;
-  }
-  
-  /* Expanded Course Details */
-  .courseDetails {
-    background: linear-gradient(135deg, rgba(15, 32, 39, 0.85), rgba(48, 124, 103, 0.85));
-    color: #e0e0e0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 800px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    text-align: left;
-  }
-  
-  .courseDetails h2 {
-    margin-top: 0;
-    font-size: 2rem;
-    color: #98ff98;
-  }
-  
-  .courseDetails p {
-    margin: 0.5rem 0;
-  }
-  
-  .courseDetails button {
-    background-color: #046b40;
-    color: #d5dad6;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .courseDetails button:hover {
-    background-color: #00b53f;
-    transform: scale(1.05);
-  }
-  
-  /* Loading Spinner */
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #98ff98;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* Error Message */
-  .error {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: #f44336;
-    padding: 1rem;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 2rem auto;
-    font-size: 1.1rem;
-    text-align: center;
-    border: 1px solid rgba(244, 67, 54, 0.5);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .courses {
-      grid-template-columns: 1fr;
-      padding: 1rem;
-    }
-  
-    .course {
-      padding: 1rem;
-    }
-  
-    .courseDetails {
-      padding: 1.5rem;
-    }
-  }
-  
+.courses {
+  padding: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  background-color: #0e141b;
+}
+
+.course {
+  background-color: #1e272e;
+  padding: 25px;
+  border-radius: 10px;
+  color: #e0e0e0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.course:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.course h3 {
+  color: #98ff98;
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.course p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Enhanced Button Styles */
+.course button {
+  background: linear-gradient(135deg, #046b40, #038554);
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: auto;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(4, 107, 64, 0.2);
+}
+
+.course button:hover {
+  background: linear-gradient(135deg, #038554, #04a164);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(4, 107, 64, 0.3);
+}
+
+.course button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(4, 107, 64, 0.2);
+}
+
+/* More Details Button Variation */
+.course button:first-of-type {
+  background: transparent;
+  border: 2px solid #046b40;
+  color: #98ff98;
+  padding: 10px 20px;
+  box-shadow: none;
+}
+
+.course button:first-of-type:hover {
+  background: rgba(4, 107, 64, 0.1);
+  transform: none;
+  box-shadow: none;
+}
+
+.courseDetails {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #1e272e;
+  padding: 30px;
+  border-radius: 10px;
+  color: #e0e0e0;
+}
+
+.courseDetails h2 {
+  color: #98ff98;
+  margin-bottom: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.courseDetails p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+/* Enhanced Details Button */
+.courseDetails button {
+  background: linear-gradient(135deg, #046b40, #038554);
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  color: #ffffff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(4, 107, 64, 0.2);
+}
+
+.courseDetails button:hover {
+  background: linear-gradient(135deg, #038554, #04a164);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(4, 107, 64, 0.3);
+}
+
+.courseDetails button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(4, 107, 64, 0.2);
+}
+
+.enrolled {
+  color: #98ff98;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(152, 255, 152, 0.1);
+  border-radius: 5px;
+}
+
+/* Loading and Error States */
+.courses > div:only-child {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: #e0e0e0;
+}
