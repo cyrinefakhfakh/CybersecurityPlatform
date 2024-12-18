@@ -1,10 +1,7 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const Course = require('../models/Course.js');
-
 const router = express.Router();
-
-// GET / - Fetch all courses
 router.get('/', async (req, res) => {
   try {
     console.log('Fetching courses...');
@@ -15,12 +12,9 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch courses', error: error.message });
   }
 });
-
-// POST /add - Add a new course
 router.post(
   '/add',
   [
-    // Validation rules
     body('title').notEmpty().withMessage('Course title is required'),
     body('description').notEmpty().withMessage('Course description is required'),
     body('instructor').notEmpty().withMessage('Instructor name is required'),
@@ -35,9 +29,7 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log('Validation errors:', errors.array());
-      return res.status(400).json({ errors: errors.array() });
-    }
-
+      return res.status(400).json({ errors: errors.array() }); }
     try {
       console.log('Request body:', req.body);
       const newCourse = new Course(req.body);
@@ -46,8 +38,5 @@ router.post(
     } catch (error) {
       console.error('Error saving course:', error.message);
       res.status(500).json({ message: 'Server error', error: error.message });
-    }
-  }
-);
-
+    }});
 module.exports = router;

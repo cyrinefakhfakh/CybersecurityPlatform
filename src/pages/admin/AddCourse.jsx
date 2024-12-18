@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './AddCourse.module.css';
-
 function AddCourse() {
   const navigate = useNavigate();
   const [courseData, setCourseData] = useState({
@@ -192,7 +191,6 @@ function AddCourse() {
             ))}
           </select>
         </div>
-
         <div className={styles.checkbox}>
           <input
             type="checkbox"
@@ -202,8 +200,6 @@ function AddCourse() {
           />
           <label>Publish Course Immediately</label>
         </div>
-        
-
         <button type="submit" className={styles.button} disabled={loading}>
           {loading ? 'Creating...' : 'Add Course'}
         </button>
@@ -216,5 +212,4 @@ function AddCourse() {
     </div>
   );
 }
-
 export default AddCourse;

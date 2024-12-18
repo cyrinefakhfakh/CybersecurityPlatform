@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -11,25 +10,26 @@ function Login({ onAuth }) {
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const navigate = useNavigate();
 
-      const handleLogin = async (e) => {
-          e.preventDefault();
-          try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-        console.log('Login response:', response.data); // Log the entire response
-        localStorage.setItem('token', response.data.token); // Store token
-        localStorage.setItem('role', response.data.role); // Store role
-        const isAdminUser = response.data.role === 'admin';
-        console.log('Role:', response.data.role);
-        setMessage('Login successful! Redirecting to homepage...');
-        setMessageType('success');
-        onAuth(isAdminUser); // Update authentication state
-        navigate(isAdminUser ? '/admin' : '/'); // Redirect to admin dashboard or homepage immediately
-          } catch (error) {
-        console.error('Login error:', error.response?.data || error.message);
-        setMessage(error.response?.data?.message || 'Login failed');
-        setMessageType('error');
-          }
-        };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      console.log('Login response:', response.data); // Log the entire response
+      localStorage.setItem('token', response.data.token); // Store token
+      localStorage.setItem('role', response.data.role); // Store role
+      localStorage.setItem('email', email); // Store email
+      const isAdminUser = response.data.role === 'admin';
+      console.log('Role:', response.data.role);
+      setMessage('Login successful! Redirecting to homepage...');
+      setMessageType('success');
+      onAuth(isAdminUser); // Update authentication state
+      navigate(isAdminUser ? '/admin' : '/'); // Redirect to admin dashboard or homepage immediately
+    } catch (error) {
+      console.error('Login error:', error.response?.data || error.message);
+      setMessage(error.response?.data?.message || 'Login failed');
+      setMessageType('error');
+    }
+  };
 
   return (
     <div className="auth-container">

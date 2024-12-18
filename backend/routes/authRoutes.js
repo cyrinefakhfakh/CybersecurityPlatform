@@ -15,8 +15,6 @@ router.post('/signup', async (req, res) => {
     if (user) {
       return res.status(400).json({ message: 'A user with this email address already exists. Please try logging in instead.' });
     }
-
-    // Assign default role as 'user' if not provided
     const userRole = role || 'user';
 
     // Create a new user
