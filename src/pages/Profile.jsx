@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '../components/ProgressBar';
 import axios from 'axios';
 import './Profile.css'; 
 
 function Profile() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const userProgress = 75; 
   const certificates = [
@@ -30,10 +31,11 @@ function Profile() {
           }
         });
         setUser(response.data);
-        setLoading(false);
       } catch (error) {
-        console.error('Error fetching user details:', error.message);
-        navigate('/signup'); // Redirect to signup on error
+        console.error('Error fetching user details:', error);
+        setError('Error loading user data');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,19 +46,22 @@ function Profile() {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!user) {
+    return <div>Error loading user data</div>;
+  }
+
   return (
     <div className="profile">
-      <h2 className="profile-title">Your Profile</h2>
-      <div className="user-info">
-        
-        <p><strong>Email:</strong> {user.email}</p>
-      </div>
-      <p>Track your progress and earn certificates.</p>
+      <h1>Welcome, {user.email || 'User'}</h1>
       <ProgressBar progress={userProgress} />
-      <h3 className="certificates-title">Earned Certificates:</h3>
-      <ul className="certificates-list">
+      <h2>Your Certificates</h2>
+      <ul>
         {certificates.map(cert => (
-          <li key={cert.id} className="certificate-item">{cert.name}</li>
+          <li key={cert.id}>{cert.name}</li>
         ))}
       </ul>
     </div>

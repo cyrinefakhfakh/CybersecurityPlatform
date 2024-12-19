@@ -51,40 +51,6 @@ exports.sendVerification = async (req, res) => {
     }
 };
 
-
-
-
-exports.login = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: 'Invalid email or password.' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid email or password.' });
-        }
-
-        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, role: user.role });
-    } catch (error) {
-        console.error('Login error:', error.message);
-        res.status(500).json({ message: 'An error occurred during login.' });
-    }
-};
-
-exports.getUserDetails = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.userId).select('-password');
-        res.json(user);
-    } catch (error) {
-        console.error('Error fetching user details:', error.message);
-        res.status(500).json({ message: 'An error occurred while fetching user details.' });
-    }
-};
 exports.signup = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -109,11 +75,6 @@ exports.signup = async (req, res) => {
         res.status(500).json({ message: 'Signup failed.' });
     }
 };
-
-
-
-
-
 
 exports.verifyEmail = async (req, res) => {
     const { email, verificationCode } = req.body;
@@ -148,4 +109,37 @@ exports.verifyEmail = async (req, res) => {
     }
 };
 
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
 
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid email or password.' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid email or password.' });
+        }
+
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token, role: user.role });
+    } catch (error) {
+        console.error('Login error:', error.message);
+        res.status(500).json({ message: 'An error occurred during login.' });
+    }
+};
+
+exports.getUserDetails = async (req, res) => {
+    try {
+      const user = await User.findById(req.user.userId).select('-password');
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user);
+    } catch (error) {
+      console.error('Error fetching user details:', error.message);
+      res.status(500).json({ message: 'An error occurred while fetching user details' });
+    }
+  };
