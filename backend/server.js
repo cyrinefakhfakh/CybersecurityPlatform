@@ -17,16 +17,10 @@ app.use('/api/auth', authRoutes);
 
 const mongoURI = process.env.MONGO_URI || 'mongodb+srv://sirinefakhfakh03:dukkS842523AsXSR@cluster0.nmpyr.mongodb.net/';
 const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverSelectionTimeoutMS: 5000, // Increase timeout to 5 seconds
 };
 
-mongoose.connect(mongoURI, options)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err.message));
-
-  app.post('/api/enroll', auth, async (req, res) => {
+app.post('/api/enroll', auth, async (req, res) => {
     const { courseId } = req.body;
     
     console.log('===== ENROLLMENT DEBUG =====');
@@ -131,5 +125,16 @@ mongoose.connect(mongoURI, options)
       });
     }
   });
+
+
+  
+  
+
+  mongoose.connect(mongoURI, options)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err.message));
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

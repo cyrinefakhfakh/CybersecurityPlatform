@@ -9,33 +9,83 @@ function SignUp({ onAuth }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); 
-  const [loading, setLoading] = useState(false); 
+  const [messageType, setMessageType] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [emailVerified, setEmailVerified] = useState(false); // New state to track email verification
+  
   const navigate = useNavigate();
+
+  const handleSendVerification = async (email) => {
+    try {
+      await axios.post('http://localhost:5000/api/auth/send-verification', { email });
+      setVerificationSent(true);
+      setMessage('Verification code sent to your email!');
+      setMessageType('success');
+    } catch (error) {
+      console.error('Error sending verification:', error);
+      setMessage('Failed to send verification code');
+      setMessageType('error');
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/verify-email', {
+        email,
+        verificationCode,
+      });
+
+      if (response.data.message === 'Email verified successfully.') {
+        setMessage('Email verified successfully. You can now complete the signup.');
+        setMessageType('success');
+        setEmailVerified(true); // Update emailVerified state
+        setVerificationSent(false); // Disable further verification
+      } else {
+        setMessage('Invalid or expired verification code.');
+        setMessageType('error');
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      setMessage(error.response?.data?.message || 'Verification failed');
+      setMessageType('error');
+    }
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
       setMessageType('error');
       return;
     }
-    setLoading(true); 
+
+    if (!emailVerified) {
+      setMessage('Please verify your email before signing up.');
+      setMessageType('info');
+      if (!verificationSent) await handleSendVerification(email); // Trigger email verification if not sent
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
-      console.log('User signed up:', response.data);
-      setMessage('Sign up successful! Please log in.');
+      const signupResponse = await axios.post('http://localhost:5000/api/auth/signup', {
+        name,
+        email,
+        password,
+      });
+
+      setMessage(signupResponse.data.message);
       setMessageType('success');
-      onAuth(); // Update authentication state
-      setTimeout(() => {
-        setLoading(false); // Reset loading state
-        navigate('/login'); // Redirect to login page after signup
-      }, 2000); // Redirect after 2 seconds
+      setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      console.error('Signup error:', error.response?.data || error.message);
       setMessage(error.response?.data?.message || 'Signup failed');
       setMessageType('error');
-      setLoading(false); // Reset loading state on error
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,6 +125,22 @@ function SignUp({ onAuth }) {
           required
         />
 
+        {verificationSent && !emailVerified && (
+          <>
+            <label>Verification Code:</label>
+            <input
+              type="text"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              placeholder="Enter code from email"
+              required
+            />
+            <button type="button" onClick={handleVerifyCode}>
+              Verify Code
+            </button>
+          </>
+        )}
+
         <button
           type="submit"
           className={`auth-button ${loading ? 'loading' : ''}`}
@@ -85,16 +151,20 @@ function SignUp({ onAuth }) {
               Signing Up...
               <span className="spinner"></span>
             </>
+          ) : !emailVerified ? (
+            'Send Verification Code'
           ) : (
-            'Sign Up'
+            'Complete Signup'
           )}
         </button>
       </form>
+
       {message && (
         <div className={`message ${messageType}`}>
           {message}
         </div>
       )}
+
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>

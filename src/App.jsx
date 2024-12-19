@@ -14,7 +14,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminCourseManagement from './components/AdminCourseManagement';
 import AdminUserManagement from './components/AdminUserManagement';
 import PrivateAdminRoute from './components/PrivateAdminRoute';
-import AddCourse from './pages/admin/AddCourse'
+import AddCourse from './pages/admin/AddCourse';
+import NetworkSecurityTest from './pages/NetworkSecurityTest';
 import './index.css';
  
 function App() {
@@ -41,25 +42,18 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<CourseDetail />} />
         <Route path="/tests" element={<Tests />} />
+        <Route path="/test/:id" element={<NetworkSecurityTest />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp onAuth={handleAuthentication} />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login onAuth={handleAuthentication} />} />
         <Route path="*" element={<NotFound />} />
         <Route 
           path="/admin" 
-          element={
-            
-              <AdminDashboard />
-            
-          } 
+          element={<AdminDashboard />} 
         />
         <Route 
           path="/admin/courses" 
-          element={
-            
-              <AdminCourseManagement />
-            
-          } 
+          element={<AdminCourseManagement />} 
         />
         <Route 
           path="/admin/users" 

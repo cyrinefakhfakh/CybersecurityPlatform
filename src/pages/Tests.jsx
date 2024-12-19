@@ -1,12 +1,18 @@
 import React from 'react';
-import './Tests.css'; 
+import { useNavigate } from 'react-router-dom';
+import './Tests.css';
 
 function Tests() {
+  const navigate = useNavigate();
   const testList = [
     { id: 1, name: "Network Security Basics", points: 10 },
     { id: 2, name: "Web Application Security", points: 15 },
     { id: 3, name: "Ethical Hacking Fundamentals", points: 20 },
   ];
+
+  const startTest = (testId) => {
+    navigate(`/test/${testId}`);
+  };
 
   return (
     <div className="tests">
@@ -19,7 +25,7 @@ function Tests() {
           <li key={test.id} className="test-item">
             <h3>{test.name}</h3>
             <p>Points: {test.points}</p>
-            <button className="start-button">Start Test</button>
+            <button className="start-button" onClick={() => startTest(test.id)}>Start Test</button>
           </li>
         ))}
       </ul>

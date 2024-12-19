@@ -49,4 +49,81 @@
   .start-button:hover {
     background-color: #4c8baf; /* Change color on hover */
   }
+  /* Test specific styles */
+.timer {
+  font-size: 1.2rem;
+  color: #dbdbdb;
+}
+
+.test-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.option-button {
+  background: linear-gradient(145deg, #1d1d1d, #1a1a1a);
+  color: #dbdbdb;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.option-button:hover {
+  border-color: rgba(152, 255, 152, 0.3);
+}
+
+.option-button.selected {
+  background: linear-gradient(145deg, #017d2b, #016824);
+  color: white;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.question-text {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.test-results {
+  margin-top: 2rem;
+}
+
+.score-display {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.answer-review {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.correct {
+  color: #98ff98;
+}
+
+.incorrect {
+  color: #ff6b6b;
+}
+
+.correct-answer {
+  color: #98ff98;
+  margin-top: 0.5rem;
+}
   
