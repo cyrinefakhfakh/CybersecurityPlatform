@@ -15,9 +15,10 @@ import AdminCourseManagement from './components/AdminCourseManagement';
 import AdminUserManagement from './components/AdminUserManagement';
 import PrivateAdminRoute from './components/PrivateAdminRoute';
 import AddCourse from './pages/admin/AddCourse';
+import ManageCourses from './pages/admin/ManageCourses';
 import NetworkSecurityTest from './pages/NetworkSecurityTest';
 import './index.css';
- 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem('token')));
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('role') === 'admin');
@@ -36,7 +37,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Navbar isAuthenticated={isAuthenticated} isAdmin={isAdmin} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses />} />
@@ -47,23 +48,11 @@ function App() {
         <Route path="/signup" element={isAuthenticated ? <Navigate to="/" /> : <SignUp onAuth={handleAuthentication} />} />
         <Route path="/login" element={isAuthenticated ? <Navigate to="/" /> : <Login onAuth={handleAuthentication} />} />
         <Route path="*" element={<NotFound />} />
-        <Route 
-          path="/admin" 
-          element={<AdminDashboard />} 
-        />
-        <Route 
-          path="/admin/courses" 
-          element={<AdminCourseManagement />} 
-        />
-        <Route 
-          path="/admin/users" 
-          element={
-            <PrivateAdminRoute>
-              <AdminUserManagement />
-            </PrivateAdminRoute>
-          } 
-        />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/courses" element={<AdminCourseManagement />} />
+        <Route path="/admin/users" element={<PrivateAdminRoute><AdminUserManagement /></PrivateAdminRoute>} />
         <Route path="/admin/courses/add" element={<AddCourse />} />
+        <Route path="/admin/courses/manage" element={<ManageCourses />} />
       </Routes>
       <Footer />
     </Router>
