@@ -8,6 +8,100 @@ const NetworkSecurityTest = () => {
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isTestStarted, setIsTestStarted] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isGeneratingCertificate, setIsGeneratingCertificate] = useState(false);
+  const [certificateError, setCertificateError] = useState(null);
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const validateEmail = (email) => {
+    return email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  };
+  const handleTestCompletion = async () => {
+    const percentage = ((score / questions.length) * 100);
+    if (percentage < 70) return;
+  
+    if (!validateEmail(userEmail)) {
+      setCertificateError('Please enter a valid email address');
+      return;
+    }
+  
+    setIsGeneratingCertificate(true);
+    setCertificateError(null);
+  
+    try {
+      let response = await fetch(`${API_BASE_URL}/api/generate-certificate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          courseName: 'Network Security Basics',
+          grade: percentage.toFixed(1),
+          email: userEmail
+        })
+      });
+  
+      // Handle different response status codes
+      if (response.status === 401) {
+        // Token expired, try to refresh it
+        const refreshResponse = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            refreshToken: localStorage.getItem('refreshToken')
+          })
+        });
+  
+        if (!refreshResponse.ok) {
+          throw new Error('Your session has expired. Please log in again.');
+        }
+  
+        const refreshData = await refreshResponse.json();
+        localStorage.setItem('token', refreshData.token);
+  
+        // Retry the original request with new token
+        response = await fetch(`${API_BASE_URL}/api/generate-certificate`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${refreshData.token}`
+          },
+          body: JSON.stringify({
+            courseName: 'Network Security Basics',
+            grade: percentage.toFixed(1),
+            email: userEmail
+          })
+        });
+      }
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        // Handle specific error cases
+        if (response.status === 400) {
+          throw new Error(data.message || 'Please check your email address and try again.');
+        } else if (response.status === 404) {
+          throw new Error('User account not found. Please log in again.');
+        } else if (response.status === 500) {
+          throw new Error('Server error: ' + (data.error || 'Failed to generate certificate'));
+        } else {
+          throw new Error(data.message || 'Failed to generate certificate');
+        }
+      }
+  
+      alert('Certificate has been generated and sent to your email!');
+    } catch (error) {
+      console.error('Error generating certificate:', error);
+      setCertificateError(error.message || 'Failed to generate certificate. Please try again.');
+    } finally {
+      setIsGeneratingCertificate(false);
+    }
+  };
+
 
   const questions = [
     {
@@ -193,11 +287,45 @@ const NetworkSecurityTest = () => {
               <p className="final-score">Score: {score} out of {questions.length}</p>
               <p className="percentage">Percentage: {percentage.toFixed(1)}%</p>
               <p className={`grade ${color}`}>Grade: {grade}</p>
-              <p className="pass-status">
-                {percentage >= 70 ? 
-                  '🎉 Congratulations! You passed!' : 
-                  '📚 Keep studying and try again!'}
-              </p>
+              {percentage >= 70 && (
+                <div className="certificate-section">
+                  <p>🎉 Congratulations! You passed!</p>
+                  <div className="email-section">
+                    <input
+                      type="email"
+                      value={userEmail}
+                      onChange={(e) => {
+                        setUserEmail(e.target.value);
+                        setCertificateError(null);
+                      }}
+                      placeholder="Enter your email to receive certificate"
+                      className={`email-input ${certificateError ? 'border-red-500' : ''}`}
+                      disabled={isGeneratingCertificate}
+                    />
+                    {certificateError && (
+                      <p className="error-message text-red-500 text-sm mt-1">
+                        {certificateError}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleTestCompletion}
+                    className={`certificate-button ${
+                      isGeneratingCertificate ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={isGeneratingCertificate || !userEmail}
+                  >
+                    {isGeneratingCertificate ? (
+                      <span>Generating Certificate...</span>
+                    ) : (
+                      'Get Certificate'
+                    )}
+                  </button>
+                </div>
+              )}
+              {percentage < 70 && (
+                <p className="pass-status">📚 Keep studying and try again!</p>
+              )}
             </div>
           </div>
         </div>

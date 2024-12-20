@@ -37,6 +37,10 @@ const auth = (req, res, next) => {
       message: error.message
     });
 
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: 'Token expired' });
+    }
+
     res.status(401).json({ 
       message: 'Invalid or expired token',
       errorDetails: {
