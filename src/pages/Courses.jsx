@@ -36,9 +36,23 @@ const Courses = () => {
       isMounted = false;
     };
   }, []);
-
+  const refreshToken = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/refresh-token', {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+        }
+      });
+      localStorage.setItem('token', response.data.token);
+      return response.data.token;
+    } catch (error) {
+      console.error('Failed to refresh token:', error);
+      alert('Session expired. Please log in again.');
+      return null;
+    }
+  };
   const handleEnrollNowClick = async (course) => {
-    const token = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
     if (!token) {
       alert('Please log in to enroll in a course');
       return;
@@ -74,18 +88,25 @@ const Courses = () => {
         openEnrollmentSuccessModal(course);
       }
     } catch (error) {
-      console.error('ENROLLMENT AXIOS ERROR:', {
-        response: error.response?.data,
-        status: error.response?.status,
-        message: error.message
-      });
-  
-      const errorMessage = 
-        error.response?.data?.message || 
-        error.message || 
-        'Failed to enroll in the course';
-      
-      alert(errorMessage);
+      if (error.response?.status === 401 && error.response?.data?.message === 'jwt expired') {
+        token = await refreshToken();
+        if (token) {
+          handleEnrollNowClick(course);
+        }
+      } else {
+        console.error('ENROLLMENT AXIOS ERROR:', {
+          response: error.response?.data,
+          status: error.response?.status,
+          message: error.message
+        });
+
+        const errorMessage = 
+          error.response?.data?.message || 
+          error.message || 
+          'Failed to enroll in the course';
+        
+        alert(errorMessage);
+      }
     }
   };
   const openEnrollmentSuccessModal = (course) => {

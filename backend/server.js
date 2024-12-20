@@ -11,18 +11,30 @@ require('dotenv').config();
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const fsPromises = require('fs').promises; 
+const path = require('path');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/api/courses', courseRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/auth', authRoutes);
-
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({
+      message: 'File upload error',
+      error: err.message
+    });
+  }
+  next(err);
+});
 const mongoURI = process.env.MONGO_URI || 'mongodb+srv://sirinefakhfakh03:dukkS842523AsXSR@cluster0.nmpyr.mongodb.net/';
 const options = {
   serverSelectionTimeoutMS: 5000, // Increase timeout to 5 seconds
 };
+
 app.post('/refresh-token', async (req, res) => {
   const { refreshToken } = req.body;
 
@@ -124,7 +136,6 @@ app.post('/api/enroll', auth, async (req, res) => {
     }
   });
 
-const path = require('path');
 const tempDir = path.resolve(process.cwd(), 'temp');
 
 async function ensureTempDir() {
@@ -429,6 +440,58 @@ app.post('/api/generate-certificate', auth, async (req, res) => {
     }
   });
 
+const handlePhotoUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // Validate file type and size
+  const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (!validTypes.includes(file.type)) {
+    setError('Please upload a valid image file (JPEG, PNG, or GIF)');
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) { // 5MB limit
+    setError('Image size should be less than 5MB');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('avatar', file);
+
+  try {
+    setLoading(true);
+    setUploadProgress(0);
+
+    const response = await fetch('http://localhost:5000/api/auth/upload-avatar', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: formData,
+      onUploadProgress: (progressEvent) => {
+        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadProgress(progress);
+      },
+    });
+
+    if (!response.ok) throw new Error('Failed to upload photo');
+    
+    const data = await response.json();
+    setUser(prevUser => ({
+      ...prevUser,
+      avatar: data.avatarUrl
+    }));
+    
+    setSuccessMessage('Profile photo updated successfully!');
+    setTimeout(() => setSuccessMessage(''), 3000);
+  } catch (error) {
+    setError('Failed to upload profile photo');
+  } finally {
+    setLoading(false);
+    setUploadProgress(0);
+  }
+};
 
   mongoose.connect(mongoURI, options)
   .then(() => console.log('MongoDB connected'))

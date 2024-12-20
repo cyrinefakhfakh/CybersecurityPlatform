@@ -143,3 +143,62 @@ exports.getUserDetails = async (req, res) => {
       res.status(500).json({ message: 'An error occurred while fetching user details' });
     }
   };
+
+  exports.getEnrolledCourses = async (req, res) => {
+    try {
+      const user = await User.findById(req.user.userId)
+        .populate('enrolledCourses')
+        .select('enrolledCourses');
+      
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return empty array if no courses found
+      const courses = user.enrolledCourses || [];
+      res.json(courses);
+    } catch (error) {
+      console.error('Error fetching enrolled courses:', error.message);
+      res.status(500).json({ message: 'An error occurred while fetching enrolled courses' });
+    }
+  };
+  
+  exports.getCertificates = async (req, res) => {
+    try {
+      const user = await User.findById(req.user.userId)
+        .select('certificates');
+      
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return empty array if no certificates found
+      const certificates = user.certificates || [];
+      res.json(certificates);
+    } catch (error) {
+      console.error('Error fetching certificates:', error.message);
+      res.status(500).json({ message: 'An error occurred while fetching certificates' });
+    }
+  };
+  
+  // Update user profile
+  exports.updateProfile = async (req, res) => {
+    const { name, email, bio, phone } = req.body;
+    try {
+      const user = await User.findById(req.user.userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.bio = bio || user.bio;
+      user.phone = phone || user.phone;
+  
+      await user.save();
+      res.json(user);
+    } catch (error) {
+      console.error('Error updating profile:', error.message);
+      res.status(500).json({ message: 'An error occurred while updating profile' });
+    }
+  };

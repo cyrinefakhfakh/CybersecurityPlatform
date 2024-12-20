@@ -42,11 +42,25 @@ email: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course'
     }],
-    default: []  // Ensure default is an empty array
+    default: []  
   },
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  certificates: [{
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    },
+    issueDate: Date,
+    certificateNumber: String
+  }],
+  bio: String,
+  phone: String,
+  avatar: {
+    type: String,
+    default: ''
   }
 });
 
